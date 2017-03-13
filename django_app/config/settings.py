@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'member',
+    'post',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +85,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+AUTH_USER_MODEL = 'member.MyUser'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
