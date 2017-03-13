@@ -32,7 +32,12 @@ for key, key_dict in config_common.items():
     for inner_key, inner_key_dict in key_dict.items():
         config[key][inner_key] = inner_key_dict
 
+# Template path
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+# Media path
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SECRET_KEY = config['django']['secret_key']
 ALLOWED_HOSTS = config['django']['allowed_hosts']
@@ -73,6 +78,8 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                # MEDIA_URL 변수 사용
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
