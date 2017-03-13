@@ -26,7 +26,6 @@ CONFIG_FILE = os.path.join(CONF_DIR, 'settings_local.json' if DEBUG else 'settin
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
-# conifg common의 내용을 config에 합침
 for key, key_dict in config_common.items():
     if not config.get(key):
         config[key] = {}
