@@ -92,7 +92,7 @@ class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
         url = reverse('api:post-list')
         response = self.client.post(url)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Post.objects.cout(), 1)
+        self.assertEqual(Post.objects.count(), 1)
         post = Post.objects.first()
         self.assertEqual(post.author, user)
 
