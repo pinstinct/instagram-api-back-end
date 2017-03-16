@@ -14,13 +14,27 @@ class PostTest(APILiveServerTestCase):
 
     def create_user(self):
         user = User.objects.create_user(
-            usesrname=self.test_username,
+            username=self.test_username,
             password=self.test_password,
         )
         return user
 
     def test_post_create(self):
-        pass
+        # Post를 만들 유저를 생성 및 로그인
+        user = self.create_user()
+        self.client.login(
+            usernmae=self.test_username,
+            password=self.test_password
+        )
+
+        url = reverse('post-create')
+        # Post를 생성하는 API주소에 POST요청, response를 받아옴
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Post.objects.count(), 1)
+        post = Post.objects.first()
+        self.assertEqual(post.author.id, user.id)
 
     def test_cannot_create_post_not_authenticated(self):
         url = reverse('post-create')
