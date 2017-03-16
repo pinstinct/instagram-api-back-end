@@ -7,15 +7,13 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APILiveServerTestCase
 
-from post.models import Post, PostPhoto
+from post.models import Post
 from utils.testcase import APITestCaseAuthMixin
 
 User = get_user_model()
 
 
 class PostTest(APITestCaseAuthMixin, APILiveServerTestCase):
-
-
     def create_post(self, num=1):
         """
         :param num: 생성할 Post 수
@@ -84,10 +82,27 @@ class PostTest(APITestCaseAuthMixin, APILiveServerTestCase):
     def test_post_destroy(self):
         pass
 
-class PostPhotoTest(APILiveServerTestCase):
+
+class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
     def test_photo_add_to_post(self):
         # 유저생성 및 로그인
+        user = self.create_user_and_login(self.client)
+
         # 해당 유저로 Post 생성
+        url = reverse('api:post-list')
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Post.objects.cout(), 1)
+        post = Post.objects.first()
+        self.assertEqual(post.author, user)
+
         # 생성한 Post에 PostPhoto를 추가
-        # PostPhoto
-        pass
+        url = reverse('api:photo-create')
+
+        # test_images.jpg 파일을 이용해서 생성
+        with open('test_images.jpg') as fp:
+            data = {
+                'post': post.id,
+                'photo': fp
+            }
+            response = self.client.post(url, data)
