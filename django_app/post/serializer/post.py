@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from member.serializer import UserSerializer
 from post.models import Post
+from post.serializer.post_photo import PostPhotoSerializer
 
 __all__ = (
     'PostSerializer',
@@ -9,8 +10,8 @@ __all__ = (
 
 
 class PostSerializer(serializers.ModelSerializer):
-    # author = serializers.PrimaryKeyRelatedField(read_only=True)
     author = UserSerializer(read_only=True)
+    postphoto_set = PostPhotoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
@@ -18,9 +19,9 @@ class PostSerializer(serializers.ModelSerializer):
             'pk',
             'author',
             'created_date',
+            'postphoto_set',
         )
         read_only_fields = (
             'author',
             'created_date',
         )
-        # depth = 1

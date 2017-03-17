@@ -12,5 +12,7 @@ class PostPhotoSerializer(serializers.ModelSerializer):
         model = PostPhoto
         fields = (
             'post',
+            'pk',
             'photo',
+            # 'created_date'
         )
