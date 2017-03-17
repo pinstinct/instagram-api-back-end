@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework import permissions
 
 from post.models import Post
-from post.serializers import PostSerializer
+from post.serializer import PostSerializer
 
 __all__ = (
     'PostList',

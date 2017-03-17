@@ -1,3 +1,4 @@
+import os
 import random
 
 from django.contrib.auth import get_user_model
@@ -48,6 +49,11 @@ class PostTest(APITestCaseAuthMixin, APILiveServerTestCase):
         # response의 key값 검사
         self.assertIn('author', response.data)
         self.assertIn('created_date', response.data)
+
+        response_author = response.data['author']
+        self.assertIn('id', response_author)
+        self.assertIn('username', response_author)
+
         self.assertEqual(Post.objects.count(), 1)
         post = Post.objects.first()
         self.assertEqual(post.author.id, user.id)
@@ -69,6 +75,16 @@ class PostTest(APITestCaseAuthMixin, APILiveServerTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # num 만큼 생성되었는지 확인
         self.assertEqual(len(response.data), num)
+
+        # 생성된 response의 author 필드가 pk가 아닌 dict 형태로 전달되는지 확인
+        # print(response.data)
+        for item in response.data:
+            # print(item)
+            self.assertIn('author', item)
+            item_author = item['author']
+            # print(item_author)
+            self.assertIn('id', item_author)
+            self.assertIn('username', item_author)
 
     def test_post_update_partial(self):
         pass
@@ -100,9 +116,23 @@ class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
         url = reverse('api:photo-create')
 
         # test_images.jpg 파일을 이용해서 생성
-        with open('test_images.jpg') as fp:
+        file_path = os.path.join(os.path.dirname(__file__), 'test_image.jpg')
+        # rb : 바이너리 모드로 읽기
+        with open(file_path, 'rb') as fp:
             data = {
                 'post': post.id,
                 'photo': fp
             }
             response = self.client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        self.assertIn('post', response.data)
+        self.assertIn('photo', response.data)
+
+        self.assertEqual(post.pk, response.data['post'])
+
+    def test_cannot_photo_add_to_post_not_authenticated(self):
+        pass
+
+    def test_cannot_photo_add_to_post_user_is_not_author(self):
+        pass
