@@ -1,3 +1,37 @@
-from django.test import TestCase
+from django.test import LiveServerTestCase
 
-# Create your tests here.
+from member.models import MyUser
+
+
+class RelationTest(LiveServerTestCase):
+    @staticmethod
+    def create_dummy_users(num):
+        return [MyUser.bojects.create(username='user{}'.format(i)) for i in range(num)]
+        # users = []
+        # for i in range(num):
+        #     user = MyUser.objects.create(
+        #         username='user{}'.format(i),
+        #         password='test_password'
+        #     )
+        #     users.append(user)
+        # return users
+
+    def test_following(self):
+        users = self.create_dummy_users(10)
+        print(users[0].following.values('to_user'))
+        users[0].follow(users[1])
+        users[0].follow(users[2])
+        users[0].follow(users[3])
+        users[0].follow(users[4])
+
+        self.assertEqual(users[0].following.count(), 4)
+        # self.assertIn(users[0], users[1])
+
+    def test_followers(self):
+        pass
+
+    def test_block_users(self):
+        pass
+
+    def test_friends(self):
+        pass

@@ -49,7 +49,7 @@ class PostTest(APITestCaseAuthMixin, APILiveServerTestCase):
         # response의 key값 검사
         self.assertIn('author', response.data)
         self.assertIn('created_date', response.data)
-        self.assertIn('postphoto_set', response.data)
+        self.assertIn('photo_list', response.data)
 
         # response의 author 값 검사
         response_author = response.data['author']
@@ -57,12 +57,12 @@ class PostTest(APITestCaseAuthMixin, APILiveServerTestCase):
         self.assertIn('username', response_author)
 
         # response의 postphoto_set 값 검사
-        response_postphoto_set = response.data['postphoto_set']
-        self.assertIsInstance(response_postphoto_set, list)
-        for postphoto_object in response_postphoto_set:
-            self.assertIn('pk', postphoto_object)
-            self.assertIn('photo', postphoto_object)
-            self.assertIn('created_date', postphoto_object)
+        response_photo_list = response.data['photo_list']
+        self.assertIsInstance(response_photo_list, list)
+        for photo_object in response_photo_list:
+            self.assertIn('pk', photo_object)
+            self.assertIn('photo', photo_object)
+            self.assertIn('created_date', photo_object)
 
         self.assertEqual(Post.objects.count(), 1)
         post = Post.objects.first()
@@ -95,6 +95,14 @@ class PostTest(APITestCaseAuthMixin, APILiveServerTestCase):
             # print(item_author)
             self.assertIn('pk', item_author)
             self.assertIn('username', item_author)
+
+        # response의 postphoto_set 값 검사
+        # ite = response.data['postphoto_set']
+        # self.assertIsInstance(ite, list)
+        # for postphoto_object in ite:
+        #     self.assertIn('pk', postphoto_object)
+        #     self.assertIn('photo', postphoto_object)
+        #     self.assertIn('created_date', postphoto_object)
 
     def test_post_update_partial(self):
         pass

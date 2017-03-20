@@ -11,7 +11,7 @@ __all__ = (
 
 class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
-    postphoto_set = PostPhotoSerializer(many=True, read_only=True)
+    photo_list = PostPhotoSerializer(source='postphoto_set', many=True, read_only=True)
 
     class Meta:
         model = Post
@@ -19,7 +19,7 @@ class PostSerializer(serializers.ModelSerializer):
             'pk',
             'author',
             'created_date',
-            'postphoto_set',
+            'photo_list',
         )
         read_only_fields = (
             'author',
