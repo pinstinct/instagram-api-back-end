@@ -3,6 +3,7 @@
 .conf-secret/
 static_root/
 _Dockerfile*
+django_app/static/css/
 
 
 # Created by https://www.gitignore.io/api/pycharm,python,django,macos
