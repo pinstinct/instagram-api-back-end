@@ -40,10 +40,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Static path
+BOWER_DIR = os.path.join(ROOT_DIR, 'bower_components')
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     STATIC_DIR,
+    BOWER_DIR,
 )
 
 SECRET_KEY = config['django']['secret_key']

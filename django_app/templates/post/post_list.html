@@ -2,10 +2,10 @@
 
 {% block content %}
 <div class="post-list-container">
-    {% for post in posts %}
+    {% for post in object_list %}
     <article class="post">
         <header class="post-header">
-            <span class="header-username">{{ post.author.username}}</span>
+            <span class="header-username">{{ post.author.username }}</span>
                 {% if user == post.author %}
                 <form action=""
                       method="POST"
@@ -16,9 +16,15 @@
             <span class="header-date">{{ post.created_date }}</span>
         </header>
         <div class="post-image-container">
-            {% for postphoto in post.postphoto_set.all %}
-            <img src="{{ postphoto.photo.url }}" alt="" class="post-image">
-            {% endfor %}
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for postphoto in post.postphoto_set.all %}
+                    <div class="swiper-slide">
+                    <img src="{{ postphoto.photo.url }}" alt="" class="post-image">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         <div class="post-bottom-container">
             좋아요 {{ post.like_users.all.count }}개
