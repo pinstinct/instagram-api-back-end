@@ -48,6 +48,9 @@ STATICFILES_DIRS = (
     BOWER_DIR,
 )
 
+# Login URL
+LOGIN_URL = 'admin/'
+
 SECRET_KEY = config['django']['secret_key']
 ALLOWED_HOSTS = config['django']['allowed_hosts']
 
