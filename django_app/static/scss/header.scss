@@ -4,11 +4,11 @@
   border-bottom: 1px solid $color-border;
   nav {
     padding: 26px 40px;
-    .nav-group{
+    .nav-group {
       display: inline-block;
       vertical-align: middle;
     }
-    .nav-left{
+    .nav-left {
       height: 35px;
       a.logo {
         display: inline-block;
@@ -29,6 +29,7 @@
     .nav-right {
       float: right;
       margin-top: 5px;
+
       a.btn-header-nav {
         display: inline-block;
         width: 24px;
