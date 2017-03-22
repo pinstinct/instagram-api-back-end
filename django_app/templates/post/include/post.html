@@ -3,7 +3,7 @@
     <span class="header-username">{{ post.author.username }}</span>
     <!-- Post delete form start -->
     {% if user == post.author %}
-    <form action="" method="POST" class="inline">{% csrf_token %}
+    <form action="{% url 'post:post-delete' pk=post.pk %}" method="POST" class="inline">{% csrf_token %}
       <button type="submit" class="btn">Delete</button>
     </form>
     {% endif %}
@@ -50,7 +50,7 @@
             <span class="comment-content">{{ comment.content }}</span>
             <!-- 삭제를 위한 Form -->
             {% if user == comment.author %}
-            <form action="" method="POST">{% csrf_token %}
+            <form action="{% url 'post:post-delete' pk=post.pk %}" method="POST">{% csrf_token %}
 	            <button type="submit" class="btn">Delete</button>
             </form>
             {% endif %}

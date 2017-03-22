@@ -4,7 +4,9 @@ PostList, PostDetail, PostCreate, PostDelete 뷰를 작성
 """
 from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import FormView
 from django.views.generic import ListView
@@ -87,5 +89,6 @@ class PostCreate(FormView):
     #         return HttpResponse(form.errors)
 
 
-class PostDelete(View):
-    pass
+class PostDelete(DeleteView):
+    model = Post
+    success_url = reverse_lazy('post:post-list')
