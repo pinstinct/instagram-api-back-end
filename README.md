@@ -9,8 +9,8 @@
 ### Authentication
 - POST /api/member/token-auth/ : 토큰 발급
 - POST /api/member/token-delete/ : 토큰 삭제
-- POST /rest-auth/login/ : 토큰 로그인
-- POST /rest-auth/logout/ : 토큰 로그아웃
+- POST /rest-auth/login/ : 로그인
+- POST /rest-auth/logout/ : 로그아웃
 
 ### Member
 - GET /api/member/profile/ : 프로필 목록 (권한: 인증된 사용자)
