@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from rest_framework.authtoken.models import Token
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,7 +16,8 @@ class DeleteToken(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        user = request.user
-        token = Token.objects.get(user=user)
-        token.delete()
-        return Response({'Delete token': token.key})
+        # user = request.user
+        # token = Token.objects.get(user=user)
+        # token.delete()
+        request.auth.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
