@@ -1,3 +1,4 @@
+import time
 from rest_framework import generics
 from rest_framework import permissions
 
@@ -19,6 +20,10 @@ class PostList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        time.sleep(2)
+        return super().list(request, *args, **kwargs)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
